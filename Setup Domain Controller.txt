@@ -1,0 +1,43 @@
+(Tham khảo: https://www.youtube.com/watch?v=JEB612X_RBw)
+
+1. Máy chủ làm DC: Domain Controller
+- Đặt IP tĩnh
+	+ IP address: 10.10.0.10
+  	+ Subnet mask: 255.255.0.0
+	+ Default gateway:10.10.0.1
+	+ DNS: 10.10.0.10 (Trỏ đến chính nó, là IP của DC)
+- Đổi tên cho máy tính phù hợp với vai trò là Server
+	+ Computer name: DC (tùy chọn)
+	+ Member of:
+		. Domain: để trống (dùng khi join miền)
+		. Workgroup: WORKGROUP (tùy chọn)
+- Khởi động lại Server
+
+2. Cài đặt ADDS
+- Vào màn hình quản lý server: Server Manager/Dashboard
+	+ Chọn manager/Add Roles and Features
+	+ Server Roles/Active Directory Domain Services  (Tích chọn để cài đặt)
+        + Có dấu chấm than ! trên lá cờ (Notifications) cạnh menu Manager: Chọn promote this server to a domain controller
+	+ Chọn add a new forest
+	+ Root domain name: quanlyserver.vn  (ví dụ)
+	+ Đặt password cho DSRM  (khi dịch vụ lỗi còn restore được)
+	+ Netbios: để nguyên theo mặc định là QUANLYSERVER
+	+ Path: để mặc định
+	+ Cài đặt và khởi động lại máy
+	+ Vào tài khoản: có 2 tài khoản là tài khoản local (dạng tenmay/tentaikhoan) và tài khoản DC cần có @
+		chọn other: gõ administrator@quanlyserver.vn và password
+
+3. Join domain các máy client
+- Đặt IP tĩnh
+	+ IP address: 10.10.0.20
+  	+ Subnet mask: 255.255.0.0
+	+ Default gateway:10.10.0.1
+	+ DNS: 10.10.0.10 (Trỏ vào IP của máy chủ DC)
+- Join miền:
+	+ Computer name: Win10 (tùy chọn)
+	+ Member of:
+		. Domain: quanlyserver.vn
+		. Workgroup: WORKGROUP (mặc định)
+	+ Màn hình hỏi đăng nhập với quyền máy chủ DC (nhập user và password)
+	+ restart lại máy.
+	
